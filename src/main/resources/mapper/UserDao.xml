@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.admin.dao.UserDao">
+    <select id="findUsers" parameterType="java.lang.Integer" resultType= "com.qf.admin.pojo.po.User">
+        select * from user limit #{arg1},#{arg0}
+    </select>
+    <insert id="addUser" parameterType="com.qf.admin.pojo.po.User">
+        insert into user VALUES
+        (#{username},#{password},#{classid})
+    </insert>
+    <delete id="deleteuser" parameterType="com.qf.admin.pojo.po.User">
+        DELETE FROM user where classid = #{classid}
+    </delete>
+
+    <select id="toUpdate" parameterType="com.qf.admin.pojo.po.User" resultType="com.qf.admin.pojo.po.User">
+        select *
+        from user
+        where classid = #{classid}
+    </select>
+
+    <update id="Update" parameterType="com.qf.admin.pojo.po.User">
+        update user
+        SET
+        username = #{username},
+        password=#{password}
+        where classid=#{classid}
+    </update>
+
+    <select id="findUsersByPage" parameterType="com.qf.admin.util.PageInfo" resultType="com.qf.admin.pojo.po.User">
+        select * from user limit #{offset},#{pageSize}
+    </select>
+
+    <select id="CountUsers" resultType="java.lang.Integer">
+        select count(*) from user
+    </select>
+
+    <select id="SearchUsers"  parameterType="java.lang.String"  resultType="com.qf.admin.pojo.po.User">
+        select * from user where username like '%${search}%' limit #{offset},#{pageSize}
+    </select>
+
+    <select id="checkUser" parameterType="com.qf.admin.pojo.po.User" resultType="com.qf.admin.pojo.po.User">
+        select * from user where username = #{username} and password = #{password}
+    </select>
+
+    <select id="newCheck" parameterType="java.lang.String" resultType="com.qf.admin.pojo.po.User">
+        select * from user where username = #{arg0} and password = #{arg1}
+    </select>
+
+    <select id="newTotalCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+         select count(*) from user  where username like '%${_parameter}%'
+    </select>
+
+</mapper>
